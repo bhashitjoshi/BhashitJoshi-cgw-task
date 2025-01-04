@@ -1,0 +1,40 @@
+<apex:page controller="InvoiceController" showHeader="true" sidebar="true">
+ <apex:form >
+        <apex:pageBlock title="INVOICE DETAILS">
+            <table border="1px">                  
+                <tr>
+                    <th>origin_record</th>                       
+                    <td>{!recordId}</td>   
+                </tr>
+                <tr>
+                    <th>account</th>                       
+                    <td>{!accountVal}</td>
+                </tr>
+                <tr>
+                    <th>invoice_date</th>                     
+                    <td>{!invoiceDateVal}</td>
+                </tr>
+                <tr>
+                    <th>invoice_due_date</th>
+                    <td>{!invoiceDueDateVal}</td>     
+                </tr>
+                <tr>
+                    <th>child_relationship_name</th>
+                    <td>{!childRelationshipName}</td>
+                </tr>
+                <tr>
+                    <th>line_item_description</th>
+                    <td>{!lineItemDescriptionVal}</td>  
+                </tr>
+                <tr>
+                    <th>line_item_quantity</th>
+                    <td>{!lineItemQuantityVal}</td>
+                </tr>
+                <tr>
+                    <th>line_item_unit_price</th>
+                    <td>{!lineItemUnitPriceVal}</td>  
+                </tr>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
