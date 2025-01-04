@@ -8,15 +8,15 @@
                 </tr>
                 <tr>
                     <th>account</th>                       
-                    <td>{!accountVal}</td>
+                    <td>{!account}</td>
                 </tr>
                 <tr>
                     <th>invoice_date</th>                     
-                    <td>{!invoiceDateVal}</td>
+                    <td>{!invoiceDate}</td>
                 </tr>
                 <tr>
                     <th>invoice_due_date</th>
-                    <td>{!invoiceDueDateVal}</td>     
+                    <td>{!invoiceDueDate}</td>     
                 </tr>
                 <tr>
                     <th>child_relationship_name</th>
@@ -24,15 +24,15 @@
                 </tr>
                 <tr>
                     <th>line_item_description</th>
-                    <td>{!lineItemDescriptionVal}</td>  
+                    <td>{!lineItemDescription}</td>  
                 </tr>
                 <tr>
                     <th>line_item_quantity</th>
-                    <td>{!lineItemQuantityVal}</td>
+                    <td>{!lineItemQuantity}</td>
                 </tr>
                 <tr>
                     <th>line_item_unit_price</th>
-                    <td>{!lineItemUnitPriceVal}</td>  
+                    <td>{!lineItemUnitPrice}</td>  
                 </tr>
             </table>
         </apex:pageBlock>
