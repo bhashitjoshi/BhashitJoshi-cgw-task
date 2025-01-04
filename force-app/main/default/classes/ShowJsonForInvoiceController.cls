@@ -1,4 +1,4 @@
-public without sharing class ShowJsonForInvoiceController {
+public class ShowJsonForInvoiceController {
     
     public Id recordId { get; set; }
     public String account { get; set; }
@@ -28,7 +28,6 @@ public without sharing class ShowJsonForInvoiceController {
                 ' FROM '+objectName+' WHERE Id = \'' + recordId + '\'';
         }
         
-        sYSTEM.DEBUG('QUERY:'+QUERY);
         if(query != NULL){
             sobjects = Database.query(query); 
         }
@@ -113,7 +112,6 @@ public without sharing class ShowJsonForInvoiceController {
         }
         
         PageReference pg = new PageReference('/' + invoiceObj.Id);
-        System.debug('pg:'+pg);
         pg.setRedirect(true);
         return pg;
     }
