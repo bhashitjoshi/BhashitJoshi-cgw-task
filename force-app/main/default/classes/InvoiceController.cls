@@ -18,7 +18,20 @@ public class InvoiceController {
         lineItemDescription = ApexPages.currentPage().getParameters().get('line_item_description');
         lineItemQuantity = ApexPages.currentPage().getParameters().get('line_item_quantity');
         lineItemUnitPrice = ApexPages.currentPage().getParameters().get('line_item_unit_price');
-        childRelationshipName = ApexPages.currentPage().getParameters().get('child_relationship_name');
-       
+        childRelationshipName = ApexPages.currentPage().getParameters().get('child_relationship_name');       
+    }
+    
+    // Method to redirect to the new page
+    public PageReference redirectToShowJsonPage() {
+        PageReference newPage = Page.ShowJsonForInvoice; // Replace with your VF page name
+        newPage.getParameters().put('recordId', String.valueOf(recordId));
+        newPage.getParameters().put('account', account);
+        newPage.getParameters().put('invoiceDate', invoiceDate);
+        newPage.getParameters().put('invoiceDueDate', invoiceDueDate);
+        newPage.getParameters().put('lineItemDescription', lineItemDescription);
+        newPage.getParameters().put('lineItemQuantity', lineItemQuantity);
+        newPage.getParameters().put('lineItemUnitPrice', lineItemUnitPrice);
+        newPage.getParameters().put('childRelationshipName', childRelationshipName);
+        return newPage;
     }
 }

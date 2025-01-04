@@ -1,0 +1,15 @@
+<apex:page controller="ShowJsonForInvoiceController" showHeader="true" sidebar="true">
+
+    <apex:form >
+        <apex:pageBlock title="JSON Result">
+            <apex:pageBlockSection columns="1">
+                <apex:outputLabel value="Formatted JSON Output:"/>
+                <!-- Display JSON result -->
+                <apex:outputPanel layout="block" style="background-color: #f5f5f5; border: 1px solid #ccc; padding: 10px; overflow: auto; max-height: 500px;">
+                    <apex:outputText value="{!jsonResult}" escape="false"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>
