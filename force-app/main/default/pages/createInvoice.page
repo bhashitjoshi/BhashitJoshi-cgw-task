@@ -35,6 +35,10 @@
                     <td>{!lineItemUnitPrice}</td>  
                 </tr>
             </table>
+            <!-- Add Button -->
+         <apex:pageBlockButtons location="bottom">
+             <apex:commandButton value="Show JSON" action="{!redirectToShowJsonPage}" />
+         </apex:pageBlockButtons>
         </apex:pageBlock>
-    </apex:form>
+       </apex:form>
 </apex:page>

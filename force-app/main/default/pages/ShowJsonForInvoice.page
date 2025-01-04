@@ -1,5 +1,5 @@
 <apex:page controller="ShowJsonForInvoiceController" showHeader="true" sidebar="true">
-
+    
     <apex:form >
         <apex:pageBlock title="JSON Result">
             <apex:pageBlockSection columns="1">
@@ -9,7 +9,12 @@
                     <apex:outputText value="{!jsonResult}" escape="false"/>
                 </apex:outputPanel>
             </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Proceed To Create Invoice" action="{!createInvoiceAndInvoiceLineItems}" />
+            </apex:pageBlockButtons>
         </apex:pageBlock>
+        
+        
     </apex:form>
     
 </apex:page>

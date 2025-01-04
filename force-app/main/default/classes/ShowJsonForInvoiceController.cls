@@ -1,5 +1,5 @@
-public class ShowJsonForInvoiceController {
-
+public without sharing class ShowJsonForInvoiceController {
+    
     public Id recordId { get; set; }
     public String account { get; set; }
     public String invoiceDate { get; set; }
@@ -9,7 +9,7 @@ public class ShowJsonForInvoiceController {
     public String lineItemUnitPrice { get; set; }
     public String childRelationshipName { get; set; }
     public String jsonResult {get; set;}
-
+    
     public ShowJsonForInvoiceController() {
         recordId = ApexPages.currentPage().getParameters().get('recordId');
         account = ApexPages.currentPage().getParameters().get('account');
@@ -25,21 +25,21 @@ public class ShowJsonForInvoiceController {
         String query;
         if(objectName != NULL){
             query = 'SELECT ' +account+ ', '+invoiceDate+ ', '+invoiceDueDate+ ', ' + '(Select '+lineItemDescription+ ', '+ lineItemQuantity + ', '+ lineItemUnitPrice+ ' FROM '+childRelationshipName+')' +
-                		   ' FROM '+objectName+' WHERE Id = \'' + recordId + '\'';
+                ' FROM '+objectName+' WHERE Id = \'' + recordId + '\'';
         }
         
         sYSTEM.DEBUG('QUERY:'+QUERY);
         if(query != NULL){
-           sobjects = Database.query(query); 
+            sobjects = Database.query(query); 
         }
         if(sobjects != NULL){
-           // Create an instance of XeroWrapper
+            // Create an instance of XeroWrapper
             XeroWrapper wrapper = new XeroWrapper();
             wrapper.Invoices = new List<XeroWrapper.cls_Invoices>();
             for (SObject record : sObjects) {
-                 XeroWrapper.cls_Invoices invoice = new XeroWrapper.cls_Invoices();
-            	 invoice.Type = 'ACCREC';
-            
+                XeroWrapper.cls_Invoices invoice = new XeroWrapper.cls_Invoices();
+                invoice.Type = 'ACCREC';
+                
                 // Create and assign contact
                 invoice.Contact = new XeroWrapper.cls_Contact();
                 invoice.Contact.ContactID = '0000000';
@@ -54,7 +54,7 @@ public class ShowJsonForInvoiceController {
                 invoice.TotalTax = '10.00';
                 invoice.Total = (String) record.get(account);
                 
-                 // Create and assign line items
+                // Create and assign line items
                 invoice.LineItems = new List<XeroWrapper.cls_LineItems>();
                 List<SObject> childRecords = (List<SObject>) record.getSObjects(childRelationshipName);
                 for (SObject childRecord : childRecords) {
@@ -68,13 +68,53 @@ public class ShowJsonForInvoiceController {
                     lineItem.AccountCode = '200';
                     invoice.LineItems.add(lineItem);
                 }
-                 wrapper.Invoices.add(invoice);
+                wrapper.Invoices.add(invoice);
             }
             // Serialize wrapper to JSON
-        	jsonResult = System.JSON.serializePretty(wrapper);
+            jsonResult = System.JSON.serializePretty(wrapper);
         }else{
             jsonResult = 'No data found for the given record.';
         }
         
+    }
+    
+    public pageReference createInvoiceAndInvoiceLineItems(){
+        String objectName = String.valueOf(recordId.getsobjecttype());
+        List<sObject> sObjects;
+        String query;
+        Invoice__c invoiceObj;
+        
+        if(objectName != NULL){
+            query = 'SELECT ' +account+ ', '+invoiceDate+ ', '+invoiceDueDate+ ', ' + '(Select '+lineItemDescription+ ', '+ lineItemQuantity + ', '+ lineItemUnitPrice+ ' FROM '+childRelationshipName+')' +
+                ' FROM '+objectName+' WHERE Id = \'' + recordId + '\'';
+        }
+        
+        if(query != NULL){
+            sobjects = Database.query(query); 
+        }
+        List<Invoice__c> invList = new List<Invoice__c>();
+        if(sObjects != NULL){
+            for (SObject record : sObjects) {
+                invoiceObj = new Invoice__c(Account__c = String.valueOf(record.get(account)), InvoiceDate__c = Date.valueOf(record.get(invoiceDate)),DueDate__c = Date.valueOf(record.get(invoiceDueDate)));
+            }
+            Insert invoiceObj;
+            List<Invoice_Line_Item__c> invoiceLineItems = new List<Invoice_Line_Item__c>();
+            for (SObject record : sObjects) {
+                
+                List<SObject> childRecords = (List<SObject>) record.getSObjects(childRelationshipName);
+                for (SObject childRecord : childRecords) {
+                    Invoice_Line_Item__c invcLineItem = new Invoice_Line_Item__c(Invoice__c = invoiceObj.Id, Description__c = (String) childRecord.get(lineItemDescription), Quantity__c = (Decimal)childRecord.get(lineItemQuantity),
+                                                                                 UnitPrice__c = (Decimal)childRecord.get(lineItemUnitPrice));
+                    
+                    invoiceLineItems.add(invcLineItem);
+                }
+            }
+            Insert invoiceLineItems; 
+        }
+        
+        PageReference pg = new PageReference('/' + invoiceObj.Id);
+        System.debug('pg:'+pg);
+        pg.setRedirect(true);
+        return pg;
     }
 }

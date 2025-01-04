@@ -34,4 +34,28 @@ public class InvoiceController {
         newPage.getParameters().put('childRelationshipName', childRelationshipName);
         return newPage;
     }
+    
+    /*public static void createAndShowJson(Id recordId){
+        String objectName = String.valueOf(recordId.getsobjecttype());
+        if(objectName != NULL){
+            query = 'SELECT ' +account+ ', '+invoiceDate+ ', '+invoiceDueDate+ ', ' + '(Select '+lineItemDescription+ ', '+ lineItemQuantity + ', '+ lineItemUnitPrice+ ' FROM '+childRelationshipName+')' +
+                		   ' FROM '+objectName+' WHERE Id = \'' + recordId + '\'';
+        }
+        
+        sYSTEM.DEBUG('QUERY:'+QUERY);
+        if(query != NULL){
+           sobjects = Database.query(query); 
+        }
+        for (SObject record : sObjects) {
+            accountVal = (String) record.get(account); // Account field
+            invoiceDateVal = (Date) record.get(invoiceDate); // Invoice Date field
+            invoiceDueDateVal = (Date) record.get(invoiceDueDate); // Invoice Due Date field
+            List<SObject> childRecords = (List<SObject>) record.getSObjects(childRelationshipName);
+            for (SObject childRecord : childRecords) {
+                lineItemDescriptionVal = (String) childRecord.get(lineItemDescription);
+                lineItemQuantityVal = (Decimal) childRecord.get(lineItemQuantity);
+                lineItemUnitPriceVal = (Decimal) childRecord.get(lineItemUnitPrice);
+            }
+        }
+    } */
 }
